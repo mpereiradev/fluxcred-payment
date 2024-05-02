@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  payment:
+    container_name: fluxcred_payment_api
+    restart: unless-stopped
+    image: srmasset/fluxcred-payment-api
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fluxcred
+      SPRING_DATASOURCE_USERNAME: srmasset
+      SPRING_DATASOURCE_PASSWORD: Admin!
+    networks:
+      - fluxcred_network
+    labels:
+      NAME: "fluxcred"
+
+networks:
+  fluxcred_network:
+    external: true
